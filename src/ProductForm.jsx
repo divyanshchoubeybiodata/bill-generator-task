@@ -473,7 +473,8 @@ const ProductForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleAddProduct = () => {
+  const handleAddProduct = (e) => {
+    e.preventDefault()
     setIsFormSubmitted(true);
   };
 
@@ -510,7 +511,7 @@ const ProductForm = () => {
           <div className="card p-4 mb-3">
             <div className="d-flex justify-content-between mb-3">
               <h4>Products</h4>{" "}
-              <button className="btn btn-dark">+ Add Product</button>
+              <button className="btn btn-dark" onClick={handleAddProduct}>+ Add Product</button>
             </div>
 
             {/* Inventory Dropdown */}
