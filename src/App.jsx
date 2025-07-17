@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import ProductForm from "./ProductForm";
+import React, { useState, useRef } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import html2pdf from "html2pdf.js";
 
 const products = [
   {
@@ -471,23 +472,123 @@ function App() {
   const [InvoiceNumber, setInvoiceNumber] = useState("2025BT0001");
   const [InvoiceDate, setInvoiceDate] = useState("15.07.2025");
   const [Name, setName] = useState("");
-  const [AddressL1, setAddressL1] = useState(
-""  );
+  const [AddressL1, setAddressL1] = useState("");
   const [AddressL2, setAddressL2] = useState("");
-  const [AddressL3, setAddressL3] = useState(
-""  );
+  const [AddressL3, setAddressL3] = useState("");
   const [ContactNo, setContactNo] = useState("");
   const [CStateCode, setCStateCode] = useState("");
   const [CGSTIN, setCGSTIN] = useState("");
   const [OrderInfo, setOrderInfo] = useState("");
-  const [PaymentTerms, setPaymentTerms] = useState(
-    ""
-  );
-  const [DeliveryTerms, setDeliveryTerms] = useState(
-    ""
-  );
+  const [PaymentTerms, setPaymentTerms] = useState("");
+  const [DeliveryTerms, setDeliveryTerms] = useState("");
   const [POS, setPOS] = useState("");
+  const [SName, setSName] = useState("")
+  const [SContactNo, setSContactNo] = useState("")
 
+  const [isBillGenerated, setIsBillGenerated] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [formData, setFormData] = useState({ Quantity: 1 });
+  const [cart, setCart] = useState([]); // Store multiple added products
+
+  const invoiceRef = useRef();
+
+  // Download PDF
+  const handleDownload = () => {
+    const element = invoiceRef.current;
+    html2pdf().from(element).save("invoice.pdf");
+  };
+
+  // Print
+  const handlePrint = () => {
+    const printContents = invoiceRef.current.innerHTML;
+    const newWindow = window.open("", "", "width=900,height=900");
+    newWindow.document.write(`
+        <html>
+          <head>
+            <title>Invoice Print</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+            <style>
+              body { padding: 20px; }
+            </style>
+          </head>
+          <body>
+            ${printContents}
+          </body>
+        </html>
+      `);
+    newWindow.document.close();
+    newWindow.focus();
+    newWindow.print();
+    newWindow.close();
+  };
+
+  function HandleGenerateBtn(e){
+    e.preventDefault()
+    setIsBillGenerated(true)
+  }
+
+  const handleSelect = (product) => {
+    setSelectedProduct(product);
+    setFormData({ ...product, Quantity: 1 });
+    setSearchTerm(product.Description);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleAddProduct = (e) => {
+    e.preventDefault();
+    setCart([...cart, formData]);
+    setSelectedProduct(null);
+    setFormData({ Quantity: 1 });
+    setSearchTerm("");
+  };
+
+  const filteredProducts =
+    searchTerm.trim() === ""
+      ? []
+      : products.filter(
+          (p) =>
+            p.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            p.ArticleCode.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+  const FhandleSelect = (item) => {
+    setSelectedItem(item);
+    setShowDropdown(false);
+  };
+
+  const calculateTax = (data) => {
+    const rate = parseFloat(data.RateUnit) || 0;
+    const quantity = parseFloat(data.Quantity) || 0;
+    const cgst = parseFloat(data.CGST) || 0;
+    const sgst = parseFloat(data.SGST) || 0;
+    const cess = parseFloat(data.Cess) || 0;
+    const totalTaxPercent = cgst + sgst + cess;
+    const taxAmount = (rate * quantity * totalTaxPercent) / 100;
+    return parseFloat(taxAmount.toFixed(2));
+  };
+
+  const calculateBaseValue = (data) => {
+    const rate = parseFloat(data.RateUnit) || 0;
+    const quantity = parseFloat(data.Quantity) || 0;
+    return parseFloat((rate * quantity).toFixed(2));
+  };
+
+  const totalTax = cart
+    .reduce((sum, item) => sum + calculateTax(item), 0)
+    .toFixed(2);
+  const totalBaseValue = cart
+    .reduce((sum, item) => sum + calculateBaseValue(item), 0)
+    .toFixed(2);
+  const totalInvoiceValue = (
+    parseFloat(totalTax) + parseFloat(totalBaseValue)
+  ).toFixed(2);
 
   return (
     <>
@@ -755,12 +856,12 @@ function App() {
 
               <div className="mb-3">
                 <label className="form-label">Transport Name</label>
-                <input type="text" className="form-control" />
+                <input type="text"  onChange={(e) => setSName(e.target.value)} value={SName} className="form-control" />
               </div>
 
               <div className="mb-3">
                 <label className="form-label">Transport Mobile No.</label>
-                <input type="text" className="form-control" />
+                <input type="text"  onChange={(e) => setSContactNo(e.target.value)} value={SContactNo} className="form-control" />
               </div>
 
               <div className="row mb-3">
@@ -777,7 +878,7 @@ function App() {
               <div className="row mb-3">
                 <div className="col-md-4">
                   <label className="form-label">Mode of Transport</label>
-                  <input type="number" className="form-control" />
+                  <input type="text" className="form-control" />
                 </div>
                 <div className="col-md-4">
                   <label className="form-label">Internal Ref. No.</label>
@@ -791,22 +892,288 @@ function App() {
             </form>
 
             <form className="p-4 border rounded bg-white mb-4 ">
-              <ProductForm/>
-            </form>
+              <div className="container-fluid mt-4">
+                <div className="row justify-content-center">
+                  <div className="col-lg-12">
+                    <div className="card p-4 mb-3">
+                      <div className="d-flex justify-content-between mb-3">
+                        <h4>Products</h4>
+                        <button
+                          className="btn btn-dark"
+                          onClick={handleAddProduct}
+                          disabled={!selectedProduct}
+                        >
+                          + Add Product
+                        </button>
+                      </div>
 
-            <div className="d-flex mb-3">
-              <button className="btn btn-dark ms-auto ">Generate Bill</button>
-            </div>
+                      {/* Inventory Dropdown */}
+                      <div className="position-relative">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Show Inventory Items"
+                          value={
+                            selectedItem
+                              ? `${selectedItem.name} - ${selectedItem.price}`
+                              : ""
+                          }
+                          onClick={() => setShowDropdown(!showDropdown)}
+                          readOnly
+                        />
+
+                        {showDropdown && (
+                          <div
+                            className="border rounded bg-white shadow position-absolute w-100"
+                            style={{
+                              zIndex: 1000,
+                              maxHeight: "250px",
+                              overflowY: "auto",
+                            }}
+                          >
+                            <table className="table table-hover table-sm mb-0">
+                              <thead className="table-light sticky-top">
+                                <tr>
+                                  <th>Article Code</th>
+                                  <th>Description</th>
+                                  <th>UOM</th>
+                                  <th>Rate/Unit</th>
+                                  <th>CGST %</th>
+                                  <th>SGST %</th>
+                                  <th>Cess %</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {products.map((item) => (
+                                  <tr
+                                    key={item.ArticleCode}
+                                    onClick={() => FhandleSelect(item)}
+                                    style={{ cursor: "pointer" }}
+                                  >
+                                    <td>{item.ArticleCode}</td>
+                                    <td>{item.Description}</td>
+                                    <td>{item.UOM}</td>
+                                    <td>{item.RateUnit}</td>
+                                    <td>{item.CGST}</td>
+                                    <td>{item.SGST}</td>
+                                    <td>{item.Cess}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Product Search */}
+                      <div className="container mt-4">
+                        <label className="mb-2">Product Search</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search by Description or ArticleCode"
+                          value={searchTerm}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setSelectedProduct(null);
+                          }}
+                        />
+
+                        {!selectedProduct && (
+                          <ul className="list-group mt-2">
+                            {filteredProducts.map((product, index) => (
+                              <li
+                                key={index}
+                                className="list-group-item list-group-item-action"
+                                onClick={() => handleSelect(product)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <strong>{product.ArticleCode}</strong> -{" "}
+                                {product.Description}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {selectedProduct && (
+                          <div className="card mt-4">
+                            <div className="card-body">
+                              <h5 className="card-title">Product Details</h5>
+                              <div className="row">
+                                {Object.keys(formData).map((key) => (
+                                  <div className="col-md-4 mb-3" key={key}>
+                                    <label className="form-label">{key}</label>
+                                    <input
+                                      type={
+                                        key === "Quantity" ? "number" : "text"
+                                      }
+                                      name={key}
+                                      value={formData[key]}
+                                      className="form-control"
+                                      onChange={handleChange}
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                              <button
+                                className="btn btn-dark"
+                                onClick={handleAddProduct}
+                              >
+                                + Add Product
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {cart.length > 0 && (
+                          <div className="card mt-4">
+                            <div className="card-body">
+                              <h5>Added Product Summary</h5>
+                              <table className="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th>Sr. No.</th>
+                                    {Object.keys(cart[0]).map((key) => (
+                                      <th key={key}>{key}</th>
+                                    ))}
+                                    <th>Tax</th>
+                                    <th>Base Value</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {cart.map((item, idx) => (
+                                    <tr key={idx}>
+                                      <td>{idx + 1}</td>
+                                      {Object.values(item).map((value, i) => (
+                                        <td key={i}>{value}</td>
+                                      ))}
+                                      <td>{calculateTax(item)}</td>
+                                      <td>{calculateBaseValue(item)}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="p-4 border rounded bg-white mb-4">
+                      <h4>Tax Summary</h4>
+                      {cart.length === 0 ? (
+                        <input
+                          className="form-control text-center p-4"
+                          type="text"
+                          placeholder="No items added to the invoice yet"
+                          readOnly
+                        />
+                      ) : (
+                        <table className="table table-bordered mt-3">
+                          <thead>
+                            <tr>
+                              <th>Sr. No.</th>
+                              {Object.keys(cart[0]).map((key) => (
+                                <th key={key}>{key}</th>
+                              ))}
+                              <th>Tax</th>
+                              <th>Base Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {cart.map((item, idx) => (
+                              <tr key={idx}>
+                                <td>{idx + 1}</td>
+                                {Object.values(item).map((value, i) => (
+                                  <td key={i}>{value}</td>
+                                ))}
+                                <td>{calculateTax(item)}</td>
+                                <td>{calculateBaseValue(item)}</td>
+                              </tr>
+                            ))}
+                            <tr className="table-light fw-bold">
+                              <td colSpan={Object.keys(cart[0]).length + 1}>
+                                Total
+                              </td>
+                              <td>{totalTax}</td>
+                              <td>{totalBaseValue}</td>
+                            </tr>
+                            <tr className="table-success fw-bold">
+                              <td
+                                colSpan={Object.keys(cart[0]).length + 2}
+                                className="text-end"
+                              >
+                                Total Invoice Value: ₹ {totalInvoiceValue}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
+
+                    <div className="p-4 border rounded bg-white mb-4">
+                      <div className="p-4 border rounded bg-white mb-4">
+                        <h6>
+                          Certified that the particulars given above are True
+                          and Correct.
+                        </h6>
+                        <div className="d-flex justify-content-between">
+                          <span>Total no. of Deliveries: 1</span>
+                          <span>Total no. of SKUs: {cart.length}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Replace this section */}
+                  <div className="d-flex mb-3">
+                    {!isBillGenerated ? (
+                      <button
+                        className="btn btn-dark ms-auto"
+                        onClick={HandleGenerateBtn}
+                      >
+                        Generate Bill
+                      </button>
+                    ) : (
+                      <>
+                        <button className="btn btn-dark ms-auto">
+                          Edit Bill
+                        </button>
+                        <button
+                          className="btn btn-dark ms-2"
+                          onClick={handlePrint}
+                        >
+                          Print
+                        </button>
+                        <button
+                          className="btn btn-dark ms-2"
+                          onClick={handleDownload}
+                        >
+                          Download
+                        </button>
+                        <button
+                          className="btn btn-dark ms-2"
+                          onClick={() => window.location.reload()}
+                        >
+                          Create New Bill
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </form>
           </section>
 
           <section className="mx-3 ">
-            <div className="container my-4 p-4 border rounded  bg-white ">
+            <div
+              ref={invoiceRef}
+              className="container my-4 p-4 border rounded bg-white"
+            >
               <h4 className="mb-4">Invoice Preview</h4>
-
               <div className="border p-3">
                 <div className="d-flex justify-content-between">
                   <div>
-                    <strong>GSTIN:</strong> 09ABEPH7258N1Z3
+                    <strong>GSTIN:</strong> {GSTIN}
                   </div>
                   <div>
                     <strong>ORIGINAL FOR RECIPIENT</strong>
@@ -814,35 +1181,31 @@ function App() {
                 </div>
 
                 <h5 className="text-center fw-bold mt-3">
-                  BUNDELKHAND TRADERS
+                  {Companyname}
                 </h5>
 
                 <div className="row mt-4">
                   <div className="col-md-6">
                     <p>
-                      <strong>Principal Place of Business:</strong> WARD NO 11
-                      HAIDARIYA KAPSA ROAD HAIDARIYA MAUDAHA, Hamirpur, Uttar
-                      Pradesh - 210507
+                      <strong>Principal Place of Business:</strong>{PPB}
                     </p>
                     <p>
                       <strong>Supply/Dispatch From Location Address:</strong>{" "}
-                      WARD NO 11 HAIDARIYA KAPSA ROAD HAIDARIYA MAUDAHA,
-                      Hamirpur, Uttar Pradesh - 210507
+                      {SDL}
                     </p>
                     <p>
-                      <strong>Supply/Dispatch Code:</strong> 80UJY
+                      <strong>Supply/Dispatch Code:</strong> {SDC}
                     </p>
                   </div>
-
                   <div className="col-md-6">
                     <p>
-                      <strong>FSSAI Lic No:</strong> 22724219000226
+                      <strong>FSSAI Lic No:</strong> {FSSAI}
                     </p>
                     <p>
-                      <strong>GSTIN:</strong> 09ABEPH7258N1Z3
+                      <strong>GSTIN:</strong> {GSTIN}
                     </p>
                     <p>
-                      <strong>State Code:</strong> 09
+                      <strong>State Code:</strong> {StateCode}
                     </p>
                   </div>
                 </div>
@@ -852,65 +1215,97 @@ function App() {
                     <strong>Tax Invoice:</strong> 2025BT0001
                   </div>
                   <div>
-                    <strong>Date:</strong> 15.07.2025
+                    <strong>Date:</strong> {InvoiceDate}
                   </div>
                 </div>
 
                 <div className="row mt-4">
                   <div className="col-md-6">
                     <p>
-                      <strong>Billed To:</strong> BUNDELKHAND TRADERS
-                      (2000185301)
+                      <strong>Billed To:</strong> {Name}
                     </p>
                     <p>
                       <strong>Address:</strong>
                       <br />
-                      WARD NO 11 HAIDARIYA KAPSA ROAD HAIDARIYA MAUDAHA
-                      <br />
-                      Hamirpur
-                      <br />
-                      Hamirpur Banda Uttar Pradesh - 210507
+                      {AddressL1}{AddressL2}{AddressL3}
                     </p>
                     <p>
-                      <strong>Contact No:</strong> 9369606936
+                      <strong>Contact No:</strong> {ContactNo}
                     </p>
                     <p>
-                      <strong>State Code:</strong> 09
+                      <strong>State Code:</strong> {CStateCode}
                     </p>
                     <p>
-                      <strong>GSTIN:</strong> 09ABEPH7258N1Z3
+                      <strong>GSTIN:</strong> {CGSTIN}
                     </p>
                   </div>
-
                   <div className="col-md-6">
                     <p>
-                      <strong>Shipped To:</strong> BUNDELKHAND TRADERS
-                      (2000185301)
+                      <strong>Shipped To:</strong> {SName}
                     </p>
                     <p>
                       <strong>Address:</strong>
                       <br />
-                      WARD NO 11 HAIDARIYA KAPSA ROAD HAIDARIYA MAUDAHA
-                      <br />
-                      Hamirpur
-                      <br />
-                      Hamirpur Banda Uttar Pradesh - 210507
+                     {AddressL1}{AddressL2}{AddressL3}
                     </p>
                     <p>
-                      <strong>Contact No:</strong> 9369606936
+                      <strong>Contact No:</strong>{SContactNo}
                     </p>
                     <p>
-                      <strong>State Code:</strong> 09
+                      <strong>State Code:</strong> {CStateCode}
                     </p>
                     <p>
-                      <strong>GSTIN:</strong> 09ABEPH7258N1Z3
+                      <strong>GSTIN:</strong> {CGSTIN}
                     </p>
                   </div>
                 </div>
 
-                <div className="border p-3 text-center text-muted mt-3">
-                  No items added to the invoice yet
-                </div>
+                {cart.length === 0 ? (
+                  <input
+                    className="form-control text-center p-4"
+                    type="text"
+                    placeholder="No items added to the invoice yet"
+                    readOnly
+                  />
+                ) : (
+                  <table className="table table-bordered mt-3">
+                    <thead>
+                      <tr>
+                        <th>Sr. No.</th>
+                        {Object.keys(cart[0]).map((key) => (
+                          <th key={key}>{key}</th>
+                        ))}
+                        <th>Tax</th>
+                        <th>Base Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cart.map((item, idx) => (
+                        <tr key={idx}>
+                          <td>{idx + 1}</td>
+                          {Object.values(item).map((value, i) => (
+                            <td key={i}>{value}</td>
+                          ))}
+                          <td>{calculateTax(item)}</td>
+                          <td>{calculateBaseValue(item)}</td>
+                        </tr>
+                      ))}
+                      <tr className="table-light fw-bold">
+                        <td colSpan={Object.keys(cart[0]).length + 1}>Total</td>
+                        <td>{totalTax}</td>
+                        <td>{totalBaseValue}</td>
+                      </tr>
+                      <tr className="table-success fw-bold">
+                        <td
+                          colSpan={Object.keys(cart[0]).length + 2}
+                          className="text-end"
+                        >
+                          Total Invoice Value: ₹ {totalInvoiceValue}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
 
                 <div className="d-flex justify-content-between mt-3">
                   <div>
@@ -918,7 +1313,7 @@ function App() {
                     Correct.
                   </div>
                   <div>
-                    <strong>Total no. of SKUs:</strong> 0
+                    <strong>Total no. of SKUs:</strong> {cart.length}
                   </div>
                 </div>
               </div>
