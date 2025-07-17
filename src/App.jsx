@@ -794,19 +794,6 @@ function App() {
               <ProductForm/>
             </form>
 
-            <div className="p-4 border rounded bg-white mb-4">
-              <div className="p-4 border rounded bg-white mb-4">
-                <h6>
-                  Certified that the particulars given above are True and
-                  Correct.
-                </h6>
-                <div className="d-flex justify-content-between">
-                  <span>Total no. of Deliveries: 1</span>
-                  <span>Total no. of SKUs: 0</span>
-                </div>
-              </div>
-            </div>
-
             <div className="d-flex mb-3">
               <button className="btn btn-dark ms-auto ">Generate Bill</button>
             </div>

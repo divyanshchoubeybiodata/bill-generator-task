@@ -460,7 +460,7 @@ const ProductForm = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData] = useState({ Quantity: 1 });
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [cart, setCart] = useState([]); // Store multiple added products
 
   const handleSelect = (product) => {
     setSelectedProduct(product);
@@ -474,8 +474,11 @@ const ProductForm = () => {
   };
 
   const handleAddProduct = (e) => {
-    e.preventDefault()
-    setIsFormSubmitted(true);
+    e.preventDefault();
+    setCart([...cart, formData]);
+    setSelectedProduct(null);
+    setFormData({ Quantity: 1 });
+    setSearchTerm("");
   };
 
   const filteredProducts =
@@ -498,11 +501,12 @@ const ProductForm = () => {
     const cgst = parseFloat(data.CGST) || 0;
     const sgst = parseFloat(data.SGST) || 0;
     const cess = parseFloat(data.Cess) || 0;
-
     const totalTaxPercent = cgst + sgst + cess;
     const taxAmount = (rate * quantity * totalTaxPercent) / 100;
-    return taxAmount.toFixed(2);
+    return parseFloat(taxAmount.toFixed(2));
   };
+
+  const totalTax = cart.reduce((sum, item) => sum + calculateTax(item), 0).toFixed(2);
 
   return (
     <div className="container-fluid mt-4">
@@ -510,8 +514,8 @@ const ProductForm = () => {
         <div className="col-lg-12">
           <div className="card p-4 mb-3">
             <div className="d-flex justify-content-between mb-3">
-              <h4>Products</h4>{" "}
-              <button className="btn btn-dark" onClick={handleAddProduct}>+ Add Product</button>
+              <h4>Products</h4>
+              <button className="btn btn-dark" onClick={handleAddProduct} disabled={!selectedProduct}>+ Add Product</button>
             </div>
 
             {/* Inventory Dropdown */}
@@ -532,11 +536,7 @@ const ProductForm = () => {
               {showDropdown && (
                 <div
                   className="border rounded bg-white shadow position-absolute w-100"
-                  style={{
-                    zIndex: 1000,
-                    maxHeight: "250px",
-                    overflowY: "auto",
-                  }}
+                  style={{ zIndex: 1000, maxHeight: "250px", overflowY: "auto" }}
                 >
                   <table className="table table-hover table-sm mb-0">
                     <thead className="table-light sticky-top">
@@ -552,11 +552,7 @@ const ProductForm = () => {
                     </thead>
                     <tbody>
                       {products.map((item) => (
-                        <tr
-                          key={item.ArticleCode}
-                          onClick={() => FhandleSelect(item)}
-                          style={{ cursor: "pointer" }}
-                        >
+                        <tr key={item.ArticleCode} onClick={() => FhandleSelect(item)} style={{ cursor: "pointer" }}>
                           <td>{item.ArticleCode}</td>
                           <td>{item.Description}</td>
                           <td>{item.UOM}</td>
@@ -583,11 +579,9 @@ const ProductForm = () => {
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                   setSelectedProduct(null);
-                  setIsFormSubmitted(false);
                 }}
               />
 
-              {/* Search Result List */}
               {!selectedProduct && (
                 <ul className="list-group mt-2">
                   {filteredProducts.map((product, index) => (
@@ -597,15 +591,13 @@ const ProductForm = () => {
                       onClick={() => handleSelect(product)}
                       style={{ cursor: "pointer" }}
                     >
-                      <strong>{product.ArticleCode}</strong> -{" "}
-                      {product.Description}
+                      <strong>{product.ArticleCode}</strong> - {product.Description}
                     </li>
                   ))}
                 </ul>
               )}
 
-              {/* Product Details Form */}
-              {selectedProduct && !isFormSubmitted && (
+              {selectedProduct && (
                 <div className="card mt-4">
                   <div className="card-body">
                     <h5 className="card-title">Product Details</h5>
@@ -614,7 +606,7 @@ const ProductForm = () => {
                         <div className="col-md-4 mb-3" key={key}>
                           <label className="form-label">{key}</label>
                           <input
-                            type="text"
+                            type={key === "Quantity" ? "number" : "text"}
                             name={key}
                             value={formData[key]}
                             className="form-control"
@@ -623,34 +615,35 @@ const ProductForm = () => {
                         </div>
                       ))}
                     </div>
-                    <button className="btn btn-dark" onClick={handleAddProduct}>
-                      + Add Product
-                    </button>
+                    <button className="btn btn-dark" onClick={handleAddProduct}>+ Add Product</button>
                   </div>
                 </div>
               )}
 
-              {/* Product Summary Table */}
-              {selectedProduct && isFormSubmitted && (
+              {cart.length > 0 && (
                 <div className="card mt-4">
                   <div className="card-body">
                     <h5>Added Product Summary</h5>
                     <table className="table table-bordered">
                       <thead>
                         <tr>
-                          {Object.keys(formData).map((key) => (
+                          <th>Sr. No.</th>
+                          {Object.keys(cart[0]).map((key) => (
                             <th key={key}>{key}</th>
                           ))}
                           <th>Tax</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          {Object.values(formData).map((value, index) => (
-                            <td key={index}>{value}</td>
-                          ))}
-                          <td>{calculateTax(formData)}</td>
-                        </tr>
+                        {cart.map((item, idx) => (
+                          <tr key={idx}>
+                            <td>{idx + 1}</td>
+                            {Object.values(item).map((value, i) => (
+                              <td key={i}>{value}</td>
+                            ))}
+                            <td>{calculateTax(item)}</td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -659,10 +652,9 @@ const ProductForm = () => {
             </div>
           </div>
 
-          {/* Tax Summary Section */}
           <div className="p-4 border rounded bg-white mb-4">
             <h4>Tax Summary</h4>
-            {!isFormSubmitted ? (
+            {cart.length === 0 ? (
               <input
                 className="form-control text-center p-4"
                 type="text"
@@ -673,23 +665,45 @@ const ProductForm = () => {
               <table className="table table-bordered mt-3">
                 <thead>
                   <tr>
-                    {Object.keys(formData).map((key) => (
+                    <th>Sr. No.</th>
+                    {Object.keys(cart[0]).map((key) => (
                       <th key={key}>{key}</th>
                     ))}
                     <th>Tax</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    {Object.values(formData).map((value, index) => (
-                      <td key={index}>{value}</td>
-                    ))}
-                    <td>{calculateTax(formData)}</td>
+                  {cart.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>{idx + 1}</td>
+                      {Object.values(item).map((value, i) => (
+                        <td key={i}>{value}</td>
+                      ))}
+                      <td>{calculateTax(item)}</td>
+                    </tr>
+                  ))}
+                  <tr className="table-light fw-bold">
+                    <td colSpan={Object.keys(cart[0]).length + 1}>Total</td>
+                    <td>{totalTax}</td>
                   </tr>
                 </tbody>
               </table>
             )}
           </div>
+
+          <div className="p-4 border rounded bg-white mb-4">
+            <div className="p-4 border rounded bg-white mb-4">
+              <h6>
+                Certified that the particulars given above are True and
+                Correct.
+              </h6>
+              <div className="d-flex justify-content-between">
+                <span>Total no. of Deliveries: 1</span>
+                <span>Total no. of SKUs: {cart.length}</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
