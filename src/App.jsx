@@ -479,8 +479,6 @@ function App() {
   const [CStateCode, setCStateCode] = useState("");
   const [CGSTIN, setCGSTIN] = useState("");
   const [OrderInfo, setOrderInfo] = useState("");
-  const [PaymentTerms, setPaymentTerms] = useState("");
-  const [DeliveryTerms, setDeliveryTerms] = useState("");
   const [POS, setPOS] = useState("");
   const [SName, setSName] = useState("")
   const [SContactNo, setSContactNo] = useState("")
@@ -498,7 +496,7 @@ function App() {
   // Download PDF
    const handleDownload = () => {
   const opt = {
-    margin: 0.5,
+    margin: 0,
     filename: 'invoice.pdf',
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 2 },
@@ -820,27 +818,6 @@ function App() {
                 />
               </div>
 
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label className="form-label">Payment Terms </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    onChange={(e) => setPaymentTerms(e.target.value)}
-                    value={PaymentTerms}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">Delivery Terms</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    onChange={(e) => setDeliveryTerms(e.target.value)}
-                    value={DeliveryTerms}
-                  />
-                </div>
-              </div>
-
               <div className="mb-3">
                 <label className="form-label">Place of Supply</label>
                 <input
@@ -1024,12 +1001,6 @@ function App() {
                                   </div>
                                 ))}
                               </div>
-                              <button
-                                className="btn btn-dark"
-                                onClick={handleAddProduct}
-                              >
-                                + Add Product
-                              </button>
                             </div>
                           </div>
                         )}
@@ -1175,11 +1146,11 @@ function App() {
 
           
             <div
-              ref={invoiceRef}
-              className="container my-4 p-4 border rounded bg-white"
+              ref={invoiceRef} style={{width:"50vw", fontSize:"12px", marginLeft:"12px", height:"100vw"}}
+              className="container-fluid printer px-2 mt-4 me-1 p-1 border rounded bg-white"
             >
-              <h4 className="mb-4">Invoice Preview</h4>
-              <div className="border p-3">
+              <h4 className="mb-2">Invoice Preview</h4>
+              <div className="border p-2">
                 <div className="d-flex justify-content-between">
                   <div>
                     <strong>GSTIN:</strong> {GSTIN}
