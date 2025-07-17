@@ -472,7 +472,7 @@ const products = [
     Cess: 0,
   },
   {
-    ArticleCode: "ART0050",
+    ArticleCode: "ART0053",
     Description: "INDEPENDENCE 750ML PET QTY-24",
     UOM: "Water 750ml",
     RateUnit: 117,
