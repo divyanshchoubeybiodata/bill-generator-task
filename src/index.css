@@ -4,6 +4,6 @@
 
 @media only screen and (max-width: 768px) {
   .main {
-    display: block; 
+    display: inline-block; 
   }
 }

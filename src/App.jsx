@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import html2pdf from "html2pdf.js";
+import html2pdf from 'html2pdf.js';
 
 const products = [
   {
@@ -16,7 +16,7 @@ const products = [
     ArticleCode: "ART0002",
     Description: "CAMPA COLA 1L PET",
     UOM: "1000ml",
-    RateUnit: 396,
+    RateUnit: 263,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -25,7 +25,7 @@ const products = [
     ArticleCode: "ART0003",
     Description: "CAMPA LEMON 1L PET",
     UOM: "1000ml",
-    RateUnit: 396,
+    RateUnit: 263,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -34,7 +34,7 @@ const products = [
     ArticleCode: "ART0004",
     Description: "CAMPA ORANGE 1L PET",
     UOM: "1000ml",
-    RateUnit: 396,
+    RateUnit: 263,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -43,7 +43,7 @@ const products = [
     ArticleCode: "ART0005",
     Description: "CAMPA COLA FLVRD DRINK 2L PET",
     UOM: "2000ml",
-    RateUnit: 585,
+    RateUnit: 400,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -52,7 +52,7 @@ const products = [
     ArticleCode: "ART0006",
     Description: "CAMPA LEMON FLVRD DRINK 2L PET",
     UOM: "2000ml",
-    RateUnit: 585,
+    RateUnit: 400,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -61,7 +61,7 @@ const products = [
     ArticleCode: "ART0007",
     Description: "CAMPA ORANGE FLV 2L PET",
     UOM: "2000ml",
-    RateUnit: 585,
+    RateUnit: 400,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -70,7 +70,7 @@ const products = [
     ArticleCode: "ART0008",
     Description: "CAMPA COLA 200ml PET - 30PK",
     UOM: "200ml",
-    RateUnit: 235,
+    RateUnit: 187,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -79,7 +79,7 @@ const products = [
     ArticleCode: "ART0009",
     Description: "CAMPA COLA 200ml PET PMX",
     UOM: "200ml",
-    RateUnit: 235,
+    RateUnit: 187,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -88,7 +88,7 @@ const products = [
     ArticleCode: "ART0010",
     Description: "CAMPA LEMON 200ml PET",
     UOM: "200ml",
-    RateUnit: 235,
+    RateUnit: 187,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -97,7 +97,7 @@ const products = [
     ArticleCode: "ART0011",
     Description: "CAMPA ORANGE FLVRD DRINK 200ML PET",
     UOM: "200ml",
-    RateUnit: 235,
+    RateUnit: 187,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -124,7 +124,7 @@ const products = [
     ArticleCode: "ART0014",
     Description: "CAMPA COLA FLVRD DRINK 500ml PET",
     UOM: "500ml",
-    RateUnit: 357.6,
+    RateUnit:237,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -133,7 +133,7 @@ const products = [
     ArticleCode: "ART0015",
     Description: "CAMPA LEMON FLVRD DRINK 500ml PET",
     UOM: "500ml",
-    RateUnit: 357.6,
+    RateUnit: 237,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -142,7 +142,7 @@ const products = [
     ArticleCode: "ART0016",
     Description: "CAMPA ORANGE FLVRD DRINK 500ml PET",
     UOM: "500ml",
-    RateUnit: 357.6,
+    RateUnit: 237,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -160,7 +160,7 @@ const products = [
     ArticleCode: "ART0018",
     Description: "CAMPA ENERGY BERRY KICK PP 185ML CAN",
     UOM: "Can 185ml",
-    RateUnit: 592.8,
+    RateUnit: 282.44,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -169,7 +169,7 @@ const products = [
     ArticleCode: "ART0019",
     Description: "CAMPA ENERGY GOLD BOOST CBC 185ML CAN",
     UOM: "Can 185ml",
-    RateUnit: 604.8,
+    RateUnit: 282.44,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -178,7 +178,7 @@ const products = [
     ArticleCode: "ART0020",
     Description: "CAMPA COLA 185ML CAN",
     UOM: "Can 185ml",
-    RateUnit: 416.16,
+    RateUnit: 282.44,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -187,7 +187,7 @@ const products = [
     ArticleCode: "ART0021",
     Description: "CAMPA LEMON 185ML CAN",
     UOM: "Can 185ml",
-    RateUnit: 416.16,
+    RateUnit: 282.44,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -196,7 +196,7 @@ const products = [
     ArticleCode: "ART0022",
     Description: "CAMPA ORANGE 185ML CAN",
     UOM: "Can 185ml",
-    RateUnit: 416.16,
+    RateUnit: 282.44,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -205,7 +205,7 @@ const products = [
     ArticleCode: "ART0023",
     Description: "Campa Power Up 185ML CAN",
     UOM: "Can 185ml",
-    RateUnit: 416.16,
+    RateUnit: 282.44,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -277,37 +277,37 @@ const products = [
     ArticleCode: "ART0031",
     Description: "CAMPA ENERGY BERRY KICK 150ML PET",
     UOM: "Energy Pet 150ml",
-    RateUnit: 202,
+    RateUnit: 135.6,
     CGST: 14,
     SGST: 14,
-    Cess: 0,
+    Cess: 12,
   },
   {
     ArticleCode: "ART0032",
     Description: "CAMPA ENERGY LEMON KICK 150ML PET",
     UOM: "Energy Pet 150ml",
-    RateUnit: 202,
+    RateUnit: 135.6,
     CGST: 14,
     SGST: 14,
-    Cess: 0,
+    Cess: 12,
   },
   {
     ArticleCode: "ART0033",
     Description: "CAMPA ENERGY ORANGE KICK 150ML PET",
     UOM: "Energy Pet 150ml",
-    RateUnit: 202,
+    RateUnit: 135.6,
     CGST: 14,
     SGST: 14,
-    Cess: 0,
+    Cess: 12,
   },
   {
     ArticleCode: "ART0034",
     Description: "CAMPA ENERGY COLA KICK 150ML PET",
     UOM: "Energy Pet 150ml",
-    RateUnit: 202,
+    RateUnit: 135.6,
     CGST: 14,
     SGST: 14,
-    Cess: 0,
+    Cess: 12,
   },
   {
     ArticleCode: "ART0035",
@@ -340,18 +340,18 @@ const products = [
     ArticleCode: "ART0038",
     Description: "Raskik Apple Drink 150ml PET",
     UOM: "Raskik 150ml",
-    RateUnit: 203,
-    CGST: 14,
-    SGST: 14,
+    RateUnit: 185.1,
+    CGST: 12,
+    SGST: 0,
     Cess: 0,
   },
   {
     ArticleCode: "ART0039",
     Description: "Raskik Mango Drink 150ml PET",
     UOM: "Raskik 150ml",
-    RateUnit: 198,
-    CGST: 14,
-    SGST: 14,
+    RateUnit: 158.1,
+    CGST: 12,
+    SGST: 0,
     Cess: 0,
   },
   {
@@ -430,9 +430,9 @@ const products = [
     ArticleCode: "ART0048",
     Description: "INDEPENDENCE WATER 250ML PET",
     UOM: "Water 250ml",
-    RateUnit: 20,
-    CGST: 14,
-    SGST: 14,
+    RateUnit: 87.68,
+    CGST: 9,
+    SGST: 9,
     Cess: 0,
   },
   {
@@ -448,9 +448,9 @@ const products = [
     ArticleCode: "ART0050",
     Description: "INDEPENDENCE 750ML PET",
     UOM: "Water 750ml",
-    RateUnit: 60,
-    CGST: 14,
-    SGST: 14,
+    RateUnit: 70,
+    CGST: 9,
+    SGST: 9,
     Cess: 0,
   },
 ];
@@ -496,10 +496,21 @@ function App() {
   const invoiceRef = useRef();
 
   // Download PDF
-  const handleDownload = () => {
-    const element = invoiceRef.current;
-    html2pdf().from(element).save("invoice.pdf");
+   const handleDownload = () => {
+  const opt = {
+    margin: 0.5,
+    filename: 'invoice.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
   };
+
+  if (invoiceRef.current) {
+    html2pdf().set(opt).from(invoiceRef.current).save();
+  } else {
+    console.error("invoiceRef is null. DOM not loaded yet.");
+  }
+};
 
   // Print
   const handlePrint = () => {
@@ -595,7 +606,7 @@ function App() {
       <div className="bg-light w-100 h-100">
         <h3 className="text-center pt-4 fw-bolder">Sales Invoice Generator</h3>
 
-        <div className="main mx-5 ">
+        <div className="main  mx-5 ">
           <section className="container-fluid mt-4 mx-3">
             <form className="p-4 border rounded bg-white mb-4 ">
               <h4>Company Information</h4>
@@ -843,9 +854,7 @@ function App() {
               <div className="mb-3">
                 <label className="form-label">Mode of Payment</label>
                 <select className="form-select mb-3">
-                  <option value="" disabled selected>
-                    <b>Select payment mode</b>
-                  </option>
+                  <option value="" disabled selected><b>Select payment mode</b></option>
                   <option>Cash</option>
                   <option>Cheque</option>
                   <option>UPI</option>
@@ -1144,7 +1153,7 @@ function App() {
                         >
                           Print
                         </button>
-                        <button
+                        <button type="button"
                           className="btn btn-dark ms-2"
                           onClick={handleDownload}
                         >
@@ -1164,7 +1173,7 @@ function App() {
             </form>
           </section>
 
-          <section className="mx-3 ">
+          
             <div
               ref={invoiceRef}
               className="container my-4 p-4 border rounded bg-white"
@@ -1318,7 +1327,7 @@ function App() {
                 </div>
               </div>
             </div>
-          </section>
+          
         </div>
       </div>
     </>
