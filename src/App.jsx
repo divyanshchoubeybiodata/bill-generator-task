@@ -1173,10 +1173,10 @@ function App() {
           
             <div
               ref={invoiceRef} style={{width:"50vw", fontSize:"12px", marginLeft:"12px", }}
-              className="container-fluid printer px-2 mt-4 me-1 p-1 border rounded bg-white"
+              className="container-fluid printer px-2 mt-4 me-1 p-1  rounded bg-white"
             >
               <h4 className="mb-2">Invoice Preview</h4>
-              <div className="border p-2">
+              <div className=" p-2">
                 <div className="d-flex justify-content-between">
                   <div>
                     <strong>GSTIN:</strong> {GSTIN}
