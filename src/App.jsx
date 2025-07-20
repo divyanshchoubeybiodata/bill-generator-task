@@ -516,7 +516,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData] = useState({ Quantity: 1 });
-  const [cart, setCart] = useState([]); // Store multiple added products
+  const [cart, setCart] = useState([]); 
 
   const invoiceRef = useRef();
 
@@ -628,17 +628,17 @@ function App() {
 
   return (
     <>
-      <div className="bg-light w-100 h-100">
+      <div className="container-fluid bg-light w-full h-100">
         <h3 className="text-center pt-4 fw-bolder">Sales Invoice Generator</h3>
 
         <div className="main  mx-5 ">
           <section className="container-fluid mt-4 mx-3">
             <form className="p-4 border rounded bg-white mb-4 ">
-              <h4>Company Information</h4>
+              <h4 style={{fontSize:"18px" }} className="b">Company Information</h4>
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label">Company Name</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Company Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -647,7 +647,7 @@ function App() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label">GSTIN</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>GSTIN</label>
                   <input
                     type="text"
                     className="form-control"
@@ -659,7 +659,7 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label className="form-label">State Code</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>State Code</label>
                   <input
                     type="text"
                     className="form-control"
@@ -668,7 +668,7 @@ function App() {
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">State</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>State</label>
                   <input
                     type="text"
                     className="form-control"
@@ -677,7 +677,7 @@ function App() {
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">FSSAI License No</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>FSSAI License No</label>
                   <input
                     type="text"
                     className="form-control"
@@ -688,7 +688,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>
                   Principal Place of Bussiness
                 </label>
                 <input
@@ -700,7 +700,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Supply/Dispatch Location</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Supply/Dispatch Location</label>
                 <input
                   type="text"
                   className="form-control"
@@ -711,7 +711,7 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label">Supply Area </label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Supply Area </label>
                   <input
                     type="text"
                     className="form-control"
@@ -720,7 +720,7 @@ function App() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label">Supply/Dispatch Code</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Supply/Dispatch Code</label>
                   <input
                     type="text"
                     className="form-control"
@@ -732,11 +732,11 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label className="form-label">Telephone</label>
-                  <input type="number" className="form-control" />
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Telephone</label>
+                  <input type="tel" className="form-control" />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">Invoice Number</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Invoice Number</label>
                   <input
                     type="text"
                     className="form-control"
@@ -745,7 +745,7 @@ function App() {
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">Invoice Date</label>
+                  <label className="form-label"style={{fontSize:"14px", fontWeight:600 }}>Invoice Date</label>
                   <input
                     type="text"
                     className="form-control"
@@ -757,10 +757,10 @@ function App() {
             </form>
 
             <form className="p-4 border rounded bg-white mb-4 ">
-              <h4>Customer Details</h4>
+              <h4 style={{fontSize:"18px" }}>Customer Details</h4>
 
               <div className="mb-3">
-                <label className="form-label">Name</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Name</label>
                 <input
                   type="text"
                   className="form-control"
@@ -770,7 +770,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Address Line1</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Address Line1</label>
                 <input
                   type="text"
                   className="form-control"
@@ -780,7 +780,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Address Line2</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Address Line2</label>
                 <input
                   type="text"
                   className="form-control"
@@ -790,7 +790,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Address Line3</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Address Line3</label>
                 <input
                   type="text"
                   className="form-control"
@@ -801,16 +801,16 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label">Contact No.</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Contact No.</label>
                   <input
-                    type="text"
+                    type="tel"
                     className="form-control"
                     onChange={(e) => setContactNo(e.target.value)}
                     value={ContactNo}
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label">State Code</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>State Code</label>
                   <input
                     type="text"
                     className="form-control"
@@ -821,7 +821,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">GSTIN</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>GSTIN</label>
                 <input
                   type="text"
                   className="form-control"
@@ -831,12 +831,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Aadhar Number</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Aadhar Number</label>
                 <input type="text" className="form-control" />
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Order Info</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Order Info</label>
                 <input
                   type="text"
                   className="form-control"
@@ -846,7 +846,7 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Place of Supply</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Place of Supply</label>
                 <input
                   type="text"
                   className="form-control"
@@ -855,8 +855,8 @@ function App() {
                 />
               </div>
 
-              <div className="mb-3">
-                <label className="form-label">Mode of Payment</label>
+              <div className="mb-5">
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Mode of Payment</label>
                 <select className="form-select mb-3">
                   <option value="" disabled selected><b>Select payment mode</b></option>
                   <option>Cash</option>
@@ -865,40 +865,40 @@ function App() {
                 </select>
               </div>
 
-              <h4 className="mb-3">Shipping Details</h4>
+              <h4 className="mb-3" style={{fontSize:"18px" }}>Shipping Details</h4>
 
               <div className="mb-3">
-                <label className="form-label">Transport Name</label>
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Transport Name</label>
                 <input type="text"  onChange={(e) => setSName(e.target.value)} value={SName} className="form-control" />
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Transport Mobile No.</label>
-                <input type="text"  onChange={(e) => setSContactNo(e.target.value)} value={SContactNo} className="form-control" />
+                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Transport Mobile No.</label>
+                <input type="tel"  onChange={(e) => setSContactNo(e.target.value)} value={SContactNo} className="form-control" />
               </div>
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label">Vehicle No.</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Vehicle No.</label>
                   <input type="number" className="form-control" />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label">Consignment Note</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Consignment Note</label>
                   <input type="text" className="form-control" />
                 </div>
               </div>
 
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label className="form-label">Mode of Transport</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Mode of Transport</label>
                   <input type="text" className="form-control" />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">Internal Ref. No.</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Internal Ref. No.</label>
                   <input type="text" className="form-control" />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label">e-Way Bill No.</label>
+                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>e-Way Bill No.</label>
                   <input type="text" className="form-control" />
                 </div>
               </div>
@@ -910,7 +910,7 @@ function App() {
                   <div className="col-lg-12">
                     <div className="card p-4 mb-3">
                       <div className="d-flex justify-content-between mb-3">
-                        <h4>Products</h4>
+                        <h4 style={{fontSize:"18px" }}>Products</h4>
                         <button
                           className="btn btn-dark"
                           onClick={handleAddProduct}
@@ -980,7 +980,7 @@ function App() {
 
                       {/* Product Search */}
                       <div className="container mt-4">
-                        <label className="mb-2">Product Search</label>
+                        <label className="mb-2" style={{fontSize:"14px", fontWeight:600 }}>Product Search</label>
                         <input
                           type="text"
                           className="form-control"
@@ -1015,10 +1015,10 @@ function App() {
                               <div className="row">
                                 {Object.keys(formData).map((key) => (
                                   <div className="col-md-4 mb-3" key={key}>
-                                    <label className="form-label">{key}</label>
+                                    <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>{key}</label>
                                     <input
                                       type={
-                                        key === "Quantity" ? "number" : "text"
+                                        ["Quantity", "Cess", "CGST", "SGST", "RateUnit"].includes(key) ? "number" : "text"
                                       }
                                       name={key}
                                       value={formData[key]}
@@ -1067,7 +1067,7 @@ function App() {
                     </div>
 
                     <div className="p-4 border rounded bg-white mb-4">
-                      <h4>Tax Summary</h4>
+                      <h4 style={{fontSize:"18px" }}>Tax Summary</h4>
                       {cart.length === 0 ? (
                         <input
                           className="form-control text-center p-4"
@@ -1119,6 +1119,7 @@ function App() {
                     </div>
 
                     <div className="p-4 border rounded bg-white mb-4">
+                      <h4 style={{fontSize:"18px" }} className="mb-2">Declaration</h4>
                       <div className="p-4 border rounded bg-white mb-4">
                         <h6>
                           Certified that the particulars given above are True
@@ -1173,7 +1174,7 @@ function App() {
 
           
             <div
-              ref={invoiceRef} style={{width:"50vw", fontSize:"12px", marginLeft:"12px", height:"100vw"}}
+              ref={invoiceRef} style={{width:"50vw", fontSize:"12px", marginLeft:"12px", }}
               className="container-fluid printer px-2 mt-4 me-1 p-1 border rounded bg-white"
             >
               <h4 className="mb-2">Invoice Preview</h4>
@@ -1213,7 +1214,7 @@ function App() {
                     </p>
                     <p>
                       <strong>State Code:</strong> {StateCode}
-                    </p>
+                    </p> 
                   </div>
                 </div>
 
