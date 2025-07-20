@@ -1011,7 +1011,6 @@ function App() {
                         {selectedProduct && (
                           <div className="card mt-4">
                             <div className="card-body">
-                              <h5 className="card-title">Product Details</h5>
                               <div className="row">
                                 {Object.keys(formData).map((key) => (
                                   <div className="col-md-4 mb-3" key={key}>
@@ -1035,7 +1034,6 @@ function App() {
                         {cart.length > 0 && (
                           <div className="card mt-4">
                             <div className="card-body">
-                              <h5>Added Product Summary</h5>
                               <table className="table table-bordered">
                                 <thead>
                                   <tr>
@@ -1067,7 +1065,7 @@ function App() {
                     </div>
 
                     <div className="p-4 border rounded bg-white mb-4">
-                      <h4 style={{fontSize:"18px" }}>Tax Summary</h4>
+                      <h4 style={{fontSize:"18px" }} >Tax Summary</h4>
                       {cart.length === 0 ? (
                         <input
                           className="form-control text-center p-4"
