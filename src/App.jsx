@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import html2pdf from 'html2pdf.js';
+import html2pdf from "html2pdf.js";
 
 const products = [
   {
@@ -124,7 +124,7 @@ const products = [
     ArticleCode: "ART0014",
     Description: "CAMPA COLA FLVRD DRINK 500ml PET",
     UOM: "500ml",
-    RateUnit:237,
+    RateUnit: 237,
     CGST: 14,
     SGST: 14,
     Cess: 12,
@@ -479,7 +479,7 @@ const products = [
     CGST: 9,
     SGST: 9,
     Cess: 0,
-  }
+  },
 ];
 
 function App() {
@@ -507,8 +507,8 @@ function App() {
   const [CGSTIN, setCGSTIN] = useState("");
   const [OrderInfo, setOrderInfo] = useState("");
   const [POS, setPOS] = useState("");
-  const [SName, setSName] = useState("")
-  const [SContactNo, setSContactNo] = useState("")
+  const [SName, setSName] = useState("");
+  const [SContactNo, setSContactNo] = useState("");
 
   const [isBillGenerated, setIsBillGenerated] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -516,26 +516,26 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData] = useState({ Quantity: 1 });
-  const [cart, setCart] = useState([]); 
+  const [cart, setCart] = useState([]);
 
   const invoiceRef = useRef();
 
   // Download PDF
-   const handleDownload = () => {
-  const opt = {
-    margin: 0,
-    filename: 'invoice.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-  };
+  const handleDownload = () => {
+    const opt = {
+      margin: 0,
+      filename: "invoice.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+    };
 
-  if (invoiceRef.current) {
-    html2pdf().set(opt).from(invoiceRef.current).save();
-  } else {
-    console.error("invoiceRef is null. DOM not loaded yet.");
-  }
-};
+    if (invoiceRef.current) {
+      html2pdf().set(opt).from(invoiceRef.current).save();
+    } else {
+      console.error("invoiceRef is null. DOM not loaded yet.");
+    }
+  };
 
   // Print
   const handlePrint = () => {
@@ -561,9 +561,9 @@ function App() {
     newWindow.close();
   };
 
-  function HandleGenerateBtn(e){
-    e.preventDefault()
-    setIsBillGenerated(true)
+  function HandleGenerateBtn(e) {
+    e.preventDefault();
+    setIsBillGenerated(true);
   }
 
   const handleSelect = (product) => {
@@ -634,11 +634,18 @@ function App() {
         <div className="main  mx-5 ">
           <section className="container-fluid mt-4 mx-3">
             <form className="p-4 border rounded bg-white mb-4 ">
-              <h4 style={{fontSize:"18px" }} className="b">Company Information</h4>
+              <h4 style={{ fontSize: "18px" }} className="b">
+                Company Information
+              </h4>
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Company Name</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Company Name
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -647,7 +654,12 @@ function App() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>GSTIN</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    GSTIN
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -659,7 +671,12 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>State Code</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    State Code
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -668,7 +685,12 @@ function App() {
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>State</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    State
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -677,7 +699,12 @@ function App() {
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>FSSAI License No</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    FSSAI License No
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -688,7 +715,10 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
                   Principal Place of Bussiness
                 </label>
                 <input
@@ -700,7 +730,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Supply/Dispatch Location</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Supply/Dispatch Location
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -711,7 +746,12 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Supply Area </label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Supply Area{" "}
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -720,7 +760,12 @@ function App() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Supply/Dispatch Code</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Supply/Dispatch Code
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -732,11 +777,21 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Telephone</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Telephone
+                  </label>
                   <input type="tel" className="form-control" />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Invoice Number</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Invoice Number
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -745,7 +800,12 @@ function App() {
                   />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label"style={{fontSize:"14px", fontWeight:600 }}>Invoice Date</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Invoice Date
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -757,10 +817,15 @@ function App() {
             </form>
 
             <form className="p-4 border rounded bg-white mb-4 ">
-              <h4 style={{fontSize:"18px" }}>Customer Details</h4>
+              <h4 style={{ fontSize: "18px" }}>Customer Details</h4>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Name</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Name
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -770,7 +835,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Address Line1</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Address Line1
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -780,7 +850,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Address Line2</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Address Line2
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -790,7 +865,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Address Line3</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Address Line3
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -801,7 +881,12 @@ function App() {
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Contact No.</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Contact No.
+                  </label>
                   <input
                     type="tel"
                     className="form-control"
@@ -810,7 +895,12 @@ function App() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>State Code</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    State Code
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -821,7 +911,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>GSTIN</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  GSTIN
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -831,12 +926,22 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Aadhar Number</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Aadhar Number
+                </label>
                 <input type="text" className="form-control" />
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Order Info</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Order Info
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -846,7 +951,12 @@ function App() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Place of Supply</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Place of Supply
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -856,49 +966,103 @@ function App() {
               </div>
 
               <div className="mb-5">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Mode of Payment</label>
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Mode of Payment
+                </label>
                 <select className="form-select mb-3">
-                  <option value="" disabled selected><b>Select payment mode</b></option>
+                  <option value="" disabled selected>
+                    <b>Select payment mode</b>
+                  </option>
                   <option>Cash</option>
                   <option>Cheque</option>
                   <option>UPI</option>
                 </select>
               </div>
 
-              <h4 className="mb-3" style={{fontSize:"18px" }}>Shipping Details</h4>
+              <h4 className="mb-3" style={{ fontSize: "18px" }}>
+                Shipping Details
+              </h4>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Transport Name</label>
-                <input type="text"  onChange={(e) => setSName(e.target.value)} value={SName} className="form-control" />
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Transport Name
+                </label>
+                <input
+                  type="text"
+                  onChange={(e) => setSName(e.target.value)}
+                  value={SName}
+                  className="form-control"
+                />
               </div>
 
               <div className="mb-3">
-                <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Transport Mobile No.</label>
-                <input type="tel"  onChange={(e) => setSContactNo(e.target.value)} value={SContactNo} className="form-control" />
+                <label
+                  className="form-label"
+                  style={{ fontSize: "14px", fontWeight: 600 }}
+                >
+                  Transport Mobile No.
+                </label>
+                <input
+                  type="tel"
+                  onChange={(e) => setSContactNo(e.target.value)}
+                  value={SContactNo}
+                  className="form-control"
+                />
               </div>
 
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Vehicle No.</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Vehicle No.
+                  </label>
                   <input type="number" className="form-control" />
                 </div>
                 <div className="col-md-6">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Consignment Note</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Consignment Note
+                  </label>
                   <input type="text" className="form-control" />
                 </div>
               </div>
 
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Mode of Transport</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Mode of Transport
+                  </label>
                   <input type="text" className="form-control" />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>Internal Ref. No.</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    Internal Ref. No.
+                  </label>
                   <input type="text" className="form-control" />
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>e-Way Bill No.</label>
+                  <label
+                    className="form-label"
+                    style={{ fontSize: "14px", fontWeight: 600 }}
+                  >
+                    e-Way Bill No.
+                  </label>
                   <input type="text" className="form-control" />
                 </div>
               </div>
@@ -910,7 +1074,7 @@ function App() {
                   <div className="col-lg-12">
                     <div className="card p-4 mb-3">
                       <div className="d-flex justify-content-between mb-3">
-                        <h4 style={{fontSize:"18px" }}>Products</h4>
+                        <h4 style={{ fontSize: "18px" }}>Products</h4>
                         <button
                           className="btn btn-dark"
                           onClick={handleAddProduct}
@@ -980,7 +1144,12 @@ function App() {
 
                       {/* Product Search */}
                       <div className="container mt-4">
-                        <label className="mb-2" style={{fontSize:"14px", fontWeight:600 }}>Product Search</label>
+                        <label
+                          className="mb-2"
+                          style={{ fontSize: "14px", fontWeight: 600 }}
+                        >
+                          Product Search
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -1014,10 +1183,26 @@ function App() {
                               <div className="row">
                                 {Object.keys(formData).map((key) => (
                                   <div className="col-md-4 mb-3" key={key}>
-                                    <label className="form-label" style={{fontSize:"14px", fontWeight:600 }}>{key}</label>
+                                    <label
+                                      className="form-label"
+                                      style={{
+                                        fontSize: "14px",
+                                        fontWeight: 600,
+                                      }}
+                                    >
+                                      {key}
+                                    </label>
                                     <input
                                       type={
-                                        ["Quantity", "Cess", "CGST", "SGST", "RateUnit"].includes(key) ? "number" : "text"
+                                        [
+                                          "Quantity",
+                                          "Cess",
+                                          "CGST",
+                                          "SGST",
+                                          "RateUnit",
+                                        ].includes(key)
+                                          ? "number"
+                                          : "text"
                                       }
                                       name={key}
                                       value={formData[key]}
@@ -1065,7 +1250,7 @@ function App() {
                     </div>
 
                     <div className="p-4 border rounded bg-white mb-4">
-                      <h4 style={{fontSize:"18px" }} >Tax Summary</h4>
+                      <h4 style={{ fontSize: "18px" }}>Tax Summary</h4>
                       {cart.length === 0 ? (
                         <input
                           className="form-control text-center p-4"
@@ -1117,7 +1302,9 @@ function App() {
                     </div>
 
                     <div className="p-4 border rounded bg-white mb-4">
-                      <h4 style={{fontSize:"18px" }} className="mb-2">Declaration</h4>
+                      <h4 style={{ fontSize: "18px" }} className="mb-2">
+                        Declaration
+                      </h4>
                       <div className="p-4 border rounded bg-white mb-4">
                         <h6>
                           Certified that the particulars given above are True
@@ -1150,7 +1337,8 @@ function App() {
                         >
                           Print
                         </button>
-                        <button type="button"
+                        <button
+                          type="button"
                           className="btn btn-dark ms-2"
                           onClick={handleDownload}
                         >
@@ -1170,124 +1358,129 @@ function App() {
             </form>
           </section>
 
-          
-            <div
-              ref={invoiceRef} style={{width:"50vw", fontSize:"12px", marginLeft:"12px", }}
-              className="container-fluid printer px-2 mt-4 me-1 p-1  rounded bg-white"
-            >
-              <h4 className="mb-2">Invoice Preview</h4>
-              <div className=" p-2">
-                <div className="d-flex justify-content-between">
-                  <div>
+          <div
+            ref={invoiceRef}
+            style={{ width: "50vw", fontSize: "12px", marginLeft: "12px" }}
+            className="container-fluid printer px-2 mt-4 me-1 p-1  rounded bg-white"
+          >
+            <h4 className="mb-2">Invoice Preview</h4>
+            <div className=" p-2">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <strong>GSTIN:</strong> {GSTIN}
+                </div>
+                <div>
+                  <strong>ORIGINAL FOR RECIPIENT</strong>
+                </div>
+              </div>
+
+              <h5 className="text-center fw-bold mt-3">{Companyname}</h5>
+
+              <div className="row mt-4">
+                <div className="col-md-6">
+                  <p>
+                    <strong>Principal Place of Business:</strong>
+                    {PPB}
+                  </p>
+                  <p>
+                    <strong>Supply/Dispatch From Location Address:</strong>{" "}
+                    {SDL}
+                  </p>
+                  <p>
+                    <strong>Supply/Dispatch Code:</strong> {SDC}
+                  </p>
+                </div>
+                <div className="col-md-6">
+                  <p>
+                    <strong>FSSAI Lic No:</strong> {FSSAI}
+                  </p>
+                  <p>
                     <strong>GSTIN:</strong> {GSTIN}
-                  </div>
-                  <div>
-                    <strong>ORIGINAL FOR RECIPIENT</strong>
-                  </div>
+                  </p>
+                  <p>
+                    <strong>State Code:</strong> {StateCode}
+                  </p>
                 </div>
+              </div>
 
-                <h5 className="text-center fw-bold mt-3">
-                  {Companyname}
-                </h5>
-
-                <div className="row mt-4">
-                  <div className="col-md-6">
-                    <p>
-                      <strong>Principal Place of Business:</strong>{PPB}
-                    </p>
-                    <p>
-                      <strong>Supply/Dispatch From Location Address:</strong>{" "}
-                      {SDL}
-                    </p>
-                    <p>
-                      <strong>Supply/Dispatch Code:</strong> {SDC}
-                    </p>
-                  </div>
-                  <div className="col-md-6">
-                    <p>
-                      <strong>FSSAI Lic No:</strong> {FSSAI}
-                    </p>
-                    <p>
-                      <strong>GSTIN:</strong> {GSTIN}
-                    </p>
-                    <p>
-                      <strong>State Code:</strong> {StateCode}
-                    </p> 
-                  </div>
+              <div className="d-flex justify-content-between mt-3">
+                <div>
+                  <strong>Tax Invoice:</strong> 2025BT0001
                 </div>
-
-                <div className="d-flex justify-content-between mt-3">
-                  <div>
-                    <strong>Tax Invoice:</strong> 2025BT0001
-                  </div>
-                  <div>
-                    <strong>Date:</strong> {InvoiceDate}
-                  </div>
+                <div>
+                  <strong>Date:</strong> {InvoiceDate}
                 </div>
+              </div>
 
-                <div className="row mt-4">
-                  <div className="col-md-6">
-                    <p>
-                      <strong>Billed To:</strong> {Name}
-                    </p>
-                    <p>
-                      <strong>Address:</strong>
-                      <br />
-                      {AddressL1}{AddressL2}{AddressL3}
-                    </p>
-                    <p>
-                      <strong>Contact No:</strong> {ContactNo}
-                    </p>
-                    <p>
-                      <strong>State Code:</strong> {CStateCode}
-                    </p>
-                    <p>
-                      <strong>GSTIN:</strong> {CGSTIN}
-                    </p>
-                  </div>
-                  <div className="col-md-6">
-                    <p>
-                      <strong>Shipped To:</strong> {SName}
-                    </p>
-                    <p>
-                      <strong>Address:</strong>
-                      <br />
-                     {AddressL1}{AddressL2}{AddressL3}
-                    </p>
-                    <p>
-                      <strong>Contact No:</strong>{SContactNo}
-                    </p>
-                    <p>
-                      <strong>State Code:</strong> {CStateCode}
-                    </p>
-                    <p>
-                      <strong>GSTIN:</strong> {CGSTIN}
-                    </p>
-                  </div>
+              <div className="row mt-4">
+                <div className="col-md-6">
+                  <p>
+                    <strong>Billed To:</strong> {Name}
+                  </p>
+                  <p>
+                    <strong>Address:</strong>
+                    <br />
+                    {AddressL1}
+                    {AddressL2}
+                    {AddressL3}
+                  </p>
+                  <p>
+                    <strong>Contact No:</strong> {ContactNo}
+                  </p>
+                  <p>
+                    <strong>State Code:</strong> {CStateCode}
+                  </p>
+                  <p>
+                    <strong>GSTIN:</strong> {CGSTIN}
+                  </p>
                 </div>
+                <div className="col-md-6">
+                  <p>
+                    <strong>Shipped To:</strong> {SName}
+                  </p>
+                  <p>
+                    <strong>Address:</strong>
+                    <br />
+                    {AddressL1}
+                    {AddressL2}
+                    {AddressL3}
+                  </p>
+                  <p>
+                    <strong>Contact No:</strong>
+                    {SContactNo}
+                  </p>
+                  <p>
+                    <strong>State Code:</strong> {CStateCode}
+                  </p>
+                  <p>
+                    <strong>GSTIN:</strong> {CGSTIN}
+                  </p>
+                </div>
+              </div>
 
-                {cart.length === 0 ? (
-                  <input
-                    className="form-control text-center p-4"
-                    type="text"
-                    placeholder="No items added to the invoice yet"
-                    readOnly
-                  />
-                ) : (
-                  <table className="table table-bordered mt-3">
-                    <thead>
-                      <tr>
-                        <th>Sr. No.</th>
-                        {Object.keys(cart[0]).map((key) => (
-                          <th key={key}>{key}</th>
-                        ))}
-                        <th>Tax</th>
-                        <th>Base Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cart.map((item, idx) => (
-                        <tr key={idx}>
+              {cart.length === 0 ? (
+                <input
+                  className="form-control text-center p-4"
+                  type="text"
+                  placeholder="No items added to the invoice yet"
+                  readOnly
+                />
+              ) : (
+                <table className="table table-bordered mt-3">
+                  <thead>
+                    <tr>
+                      <th>Sr. No.</th>
+                      {Object.keys(cart[0]).map((key) => (
+                        <th key={key}>{key}</th>
+                      ))}
+                      <th>Tax</th>
+                      <th>Base Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cart.map((item, idx) => (
+                      <React.Fragment key={idx}>
+                        <tr className="pdf-page">
                           <td>{idx + 1}</td>
                           {Object.values(item).map((value, i) => (
                             <td key={i}>{value}</td>
@@ -1295,36 +1488,39 @@ function App() {
                           <td>{calculateTax(item)}</td>
                           <td>{calculateBaseValue(item)}</td>
                         </tr>
-                      ))}
-                      <tr className="table-light fw-bold">
-                        <td colSpan={Object.keys(cart[0]).length + 1}>Total</td>
-                        <td>{totalTax}</td>
-                        <td>{totalBaseValue}</td>
-                      </tr>
-                      <tr className="table-success fw-bold">
-                        <td
-                          colSpan={Object.keys(cart[0]).length + 2}
-                          className="text-end"
-                        >
-                          Total Invoice Value: ₹ {totalInvoiceValue}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
+                        {(idx + 1) % 7 === 0 && idx !== cart.length - 1 && (
+                          <tr className="page-break"></tr>
+                        )}
+                      </React.Fragment>
+                    ))}
+                    <tr className="table-light fw-bold">
+                      <td colSpan={Object.keys(cart[0]).length + 1}>Total</td>
+                      <td>{totalTax}</td>
+                      <td>{totalBaseValue}</td>
+                    </tr>
+                    <tr className="table-success fw-bold">
+                      <td
+                        colSpan={Object.keys(cart[0]).length + 2}
+                        className="text-end"
+                      >
+                        Total Invoice Value: ₹ {totalInvoiceValue}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
 
-                <div className="d-flex justify-content-between mt-3">
-                  <div>
-                    Certified that the particulars given above are True and
-                    Correct.
-                  </div>
-                  <div>
-                    <strong>Total no. of SKUs:</strong> {cart.length}
-                  </div>
+              <div className="d-flex justify-content-between mt-3">
+                <div>
+                  Certified that the particulars given above are True and
+                  Correct.
+                </div>
+                <div>
+                  <strong>Total no. of SKUs:</strong> {cart.length}
                 </div>
               </div>
             </div>
-          
+          </div>
         </div>
       </div>
     </>

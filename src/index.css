@@ -2,9 +2,18 @@
   display: flex;
 }
 
-
 @media only screen and (max-width: 768px) {
   .main {
-    display: inline-block; 
+    display: inline-block;
   }
+}
+
+/* Add this CSS */
+@media print {
+  .page-break {
+    page-break-after: always;
+  }
+}
+.page-break {
+  page-break-after: always;
 }
